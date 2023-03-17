@@ -1,10 +1,10 @@
 import type { NextApiRequest, NextApiResponse } from 'next';
-import {BdConect} from '../../middleware/BdConect';
-import type {respostapadrao} from '../../types/respostapadrao'
+import { BdConect } from '../../middleware/BdConect';
+import type { respostaPadrao } from '../../types/respostaPadrao'
 
 const endpontLogin = (
     req: NextApiRequest,
-    res: NextApiResponse<respostapadrao>
+    res: NextApiResponse<respostaPadrao>
 ) => {
     if (req.method === 'POST') {
         const { login, senha } = req.body
