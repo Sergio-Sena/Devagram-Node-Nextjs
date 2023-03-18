@@ -1,5 +1,5 @@
 import type { NextApiRequest, NextApiResponse } from 'next';
-import { BdConect } from '../../middleware/BdConect';
+import {conectarMongoDb} from '../../middlewares/conectarMongoDb';
 import type { respostaPadrao } from '../../types/respostaPadrao'
 
 const endpontLogin = (
@@ -8,7 +8,7 @@ const endpontLogin = (
 ) => {
     if (req.method === 'POST') {
         const { login, senha } = req.body
-        if (login === 'admin@admin' &&
+        if (login === 'admin@admin.com' &&
             senha === 'Admin@123') {
             return res.status(200).json({ msg: 'Usuario autenticado' })
         }
@@ -16,4 +16,4 @@ const endpontLogin = (
     }
     return res.status(405).json({ erro: 'Metodo informado invalido' });
 };
-export default BdConect(endpontLogin)
+export default conectarMongoDb(endpontLogin)
