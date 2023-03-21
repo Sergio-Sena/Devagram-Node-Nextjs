@@ -1,19 +1,16 @@
-import type { NextApiRequest, NextApiResponse } from 'next';
-import {conectarMongoDb} from '../../middlewares/conectarMongoDb';
-import type { respostaPadrao } from '../../types/respostaPadrao'
+import type { NextApiRequest, NextApiResponse } from 'next'
 
-const endpontLogin = (
+export default (
     req: NextApiRequest,
-    res: NextApiResponse<respostaPadrao>
+    res: NextApiResponse
 ) => {
-    if (req.method === 'POST') {
-        const { login, senha } = req.body
+    if (req.method === "POST") {
+        const { login, senha } = req.body;
         if (login === 'admin@admin.com' &&
             senha === 'Admin@123') {
-            return res.status(200).json({ msg: 'Usuario autenticado' })
+            res.status(200).json({msg: 'Usuario autenticado com sucesso'});
         }
-        return res.status(400).json({ erro: 'Usuario e senha invalidos' });
+        return res.status(400).json({ erro: 'Usuario ou senha Invalidos' });
     }
-    return res.status(405).json({ erro: 'Metodo informado invalido' });
-};
-export default conectarMongoDb(endpontLogin)
+    return res.status(405).json({ erro: 'Metodo invalido' });
+}
