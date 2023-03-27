@@ -1,5 +1,5 @@
-export type cadastroRequisicao ={
-    none: string,
+export type cadastroRequisicao = {
+    nome: string,
     email: string,
     senha: string
 }
