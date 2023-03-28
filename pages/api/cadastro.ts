@@ -24,8 +24,8 @@ const endpointCadastro =
 
             //validar se ja existe usuario com o mesmo email
             const usuariosComOMesmoEmail = await UsuarioModel.find({ email: usuario.email });
-            if(usuariosComOMesmoEmail && usuariosComOMesmoEmail.length > 0){
-                return res.status(400).json({ erro: 'Essa email ja esta em uso em uma conta' });
+            if (usuariosComOMesmoEmail && usuariosComOMesmoEmail.length > 0) {
+                return res.status(400).json({ erro: 'Essa email ja esta vinculado a uma conta!' });
             }
 
             //Salvar no banco de dados
