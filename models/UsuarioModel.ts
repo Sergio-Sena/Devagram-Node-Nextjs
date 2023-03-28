@@ -10,5 +10,5 @@ const UsuarioSchema = new Schema({
     publicacoes: { type: Number, default: 0 },
 });
 
-export const UsuarioModels = (mongoose.models.usuarios ||
+export const UsuarioModel = (mongoose.models.usuarios ||
     mongoose.model('usuarios', UsuarioSchema))

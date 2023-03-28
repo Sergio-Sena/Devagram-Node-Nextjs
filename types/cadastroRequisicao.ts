@@ -1,4 +1,4 @@
-export type cadastroRequisicao = {
+export type CadastroRequisicao = {
     nome: string,
     email: string,
     senha: string
