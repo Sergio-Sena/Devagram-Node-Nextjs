@@ -16,7 +16,7 @@ export const conectarMongoDB = (handler: NextApiHandler) =>
         const { DB_CONEXAO_STRING } = process.env
         //Se a env estiver vazia aborta o uso do sistema e informa o Desenvolvedor
         if (!DB_CONEXAO_STRING) {
-            return res.status(500).json({ erro: "Erro interno de sistema, informa o DB" })
+            return res.status(500).json({ erro: "Erro interno de sistema, informa o DBA" })
         }
         mongoose.connection.on('connected', () => console.log("Banco de dados conectado!"));
         mongoose.connection.on('erro', error => console.log(`Ocorreu erro ao conectar o Banco de dados: ${error}`));

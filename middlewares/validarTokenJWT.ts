@@ -1,0 +1,36 @@
+import type { NextApiRequest, NextApiResponse, NextApiHandler } from 'next';
+import type { respostaPadrãoMsg } from '../types/respostaPadraoMsg'
+import jwt, { JwtPayload } from 'jsonwebtoken';
+
+export const validarTokenJWT = (handler: NextApiHandler) =>
+    (req: NextApiRequest, res: NextApiResponse<respostaPadrãoMsg>) => {
+        const { MINHA_CHAVE_JWT } = process.env;
+
+        if (!MINHA_CHAVE_JWT) {
+            return res.status(500).json({ erro: 'Token não informado na execução do projeto' });
+        }
+
+        if (!req || !req.headers) {
+            return res.status(401).json({ erro: 'Não foi possivel validar o token de acesso' })
+        }
+
+        if (req.method !== 'OPTIONS') {
+            const authorization = req.headers['authorization']
+            if (!authorization) {
+                return res.status(401).json({ erro: 'Não foi possivel validar o token de acesso.' });
+            }
+            const token = authorization.substring(7);
+            if (!token) {
+                return res.status(401).json({ erro: 'Não foi posssivel validar o token de acesso.' })
+            }
+            const decoded = jwt.verify(token, MINHA_CHAVE_JWT) as JwtPayload;
+            if (!decoded) {
+                return res.status(401).json({ erro: 'Não foi possivel decodificar token de segurança' });
+            }
+            if (!req.query) {
+                req.query = {};
+            }
+            req.query.userId = decoded._id;
+        }
+        return handler(req, res);
+    }
