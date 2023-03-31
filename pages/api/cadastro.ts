@@ -1,5 +1,5 @@
 import type { NextApiRequest, NextApiResponse } from 'next';
-import type { respostaPadrãoMsg } from '../../types/respostaPadraoMsg';
+import type { respostaPadraoMsg } from '../../types/respostaPadraoMsg';
 import type { CadastroRequisicao } from '../../types/CadastroRequisicao';
 import { UsuarioModel } from '../../models/UsuarioModel'
 import { conectarMongoDB } from '@/middlewares/conectarMongoDB';
@@ -9,7 +9,7 @@ import nc from 'next-connect';
 
 const handler = nc()
     .use(upload.single('file'))
-    .post(async (req: NextApiRequest, res: NextApiResponse<respostaPadrãoMsg>) => {
+    .post(async (req: NextApiRequest, res: NextApiResponse<respostaPadraoMsg>) => {
 
         const usuario = req.body as CadastroRequisicao;
 
@@ -33,7 +33,7 @@ const handler = nc()
 
         //enviar a imagem do multer para o Comic
         const image = await uploadImagemCosmic(req);
-
+        console.log(image)
 
         //Salvar no banco de dados
         const usuarioASerSalvo = {
@@ -41,6 +41,7 @@ const handler = nc()
             email: usuario.email,
             senha: md5(usuario.senha),
             avatar: image?.media?.url
+            
         }
         await UsuarioModel.create(usuarioASerSalvo);
         return res.status(200).json({ msg: 'Usuario cadastrado com sucesso!' })

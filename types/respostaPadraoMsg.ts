@@ -1,4 +1,4 @@
-export type respostaPadrãoMsg = {
+export type respostaPadraoMsg = {
     msg?: String,
     erro?: string
 
