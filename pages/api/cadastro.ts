@@ -8,19 +8,21 @@ import { upload, uploadImagemCosmic } from '../../services/uploadImagensCosmic';
 import nc from 'next-connect';
 
 const handler = nc()
+    //upload da imagem de avatar
     .use(upload.single('file'))
+    //post da requisicao para API
     .post(async (req: NextApiRequest, res: NextApiResponse<respostaPadraoMsg>) => {
-
         const usuario = req.body as CadastroRequisicao;
-
+        //validaçao de nome
         if (!usuario.nome || usuario.nome.length < 2) {
             return res.status(400).json({ erro: 'Nome invalido' });
         }
+        //validacao de email
         if (!usuario.email || usuario.email.length < 5
             || !usuario.email.includes('@')
             || !usuario.email.includes('.'))
             return res.status(400).json({ erro: 'Email invalido' });
-
+        //validacao de senha sem regex
         if (!usuario.senha || usuario.senha.length < 4) {
             return res.status(400).json({ erro: 'Senha invalida' });
         }
@@ -31,7 +33,7 @@ const handler = nc()
             return res.status(400).json({ erro: 'Essa email ja esta vinculado a uma conta!' });
         }
 
-        //enviar a imagem do multer para o Comic
+        //enviar a imagem do multer para o Cosmic
         const image = await uploadImagemCosmic(req);
         console.log(image)
 
@@ -41,7 +43,7 @@ const handler = nc()
             email: usuario.email,
             senha: md5(usuario.senha),
             avatar: image?.media?.url
-            
+
         }
         await UsuarioModel.create(usuarioASerSalvo);
         return res.status(200).json({ msg: 'Usuario cadastrado com sucesso!' })
