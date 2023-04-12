@@ -21,17 +21,17 @@ const handler = nc()
 
 const usuarioEndpoint = async (req: NextApiRequest, res: NextApiResponse<respostaPadraoMsg> | any) => {
     //pegar os dados do usuario logado
+    try {
+        const { userId } = req?.query;
+        //id do usuario
+        const usuario = await UsuarioModel.findById(userId);
+        return res.status(200).json(usuario);
+        usuario.senha = null;
 
-    const { userId } = req?.query;
-    //id do usuario
-    const usuario = await UsuarioModel.findById(userId);
-    return res.status(200).json(usuario);
-    usuario.senha = null;
+        return res.status(200).json({ msg: 'usuario autenticado com sucesso!' });
 
-    return res.status(200).json({ msg: 'usuario autenticado com sucesso!' });
-
-} catch (e) {
-    return res.status(400).json({ erro: 'Nao possivel obter dados do usuario' });
-}
+    } catch (e) {
+        return res.status(400).json({ erro: 'Nao possivel obter dados do usuario' });
+    }
 }
 export default validarTokenJWT(conectarMongoDB(usuarioEndpoint));
