@@ -11,9 +11,10 @@ const feedEndPoint = async (req: NextApiRequest, res: NextApiResponse | any) => 
         if (req.method === 'GET') {
             //Preciso receber os dados de feed do usario
 
-            if (!req?.query?.id) {
+            if (req?.query?.userId) {
                 //agora que tenho o usuario como valido e trago os feed dele.
-                const usuario = await UsuarioModel.findById(req?.query?.id);
+                const usuario = await UsuarioModel.findById(req?.query?.userId);
+                console.log(req.query, 'feed')
                 if (!usuario) {
                     return res.status(400).json({ erro: 'Usuario inexistente' });
                 }
@@ -21,11 +22,10 @@ const feedEndPoint = async (req: NextApiRequest, res: NextApiResponse | any) => 
                 const publicacao = await PublicacaoModel
                     .find({ idUsuario: usuario._id })
                     .sort({ data: -1 });
+                return res.status(200).json(publicacao);
             }
-            return res.status(200).json(publicacao);
-
+            return res.status(405).json({ erro: 'metodo informado nao é válido' });
         }
-        return res.status(405).json({ erro: 'metodo informado nao é válido' });
     } catch (e) {
         console.log(e)
     }

@@ -6,15 +6,12 @@ import { conectarMongoDB } from '../../middlewares/conectarMongoDB';
 import { validarTokenJWT } from '../../middlewares/validarTokenJWT';
 import { PublicacaoModel } from '../../models/PublicacaoModel'
 import { UsuarioModel } from '../../models/UsuarioModel'
-import { error } from 'console';
-
 
 const handler = nc()
     .use(upload.single('file'))
     .post(async (req: any, res: NextApiResponse<respostaPadraoMsg>) => {
         try {
             const { userId } = req.query;
-            console.log(userId)
             const usuario = await UsuarioModel.findById(userId);
             if (!usuario) {
                 return res.status(400).json({ erro: 'Usuario nao encontrado' })
@@ -28,8 +25,7 @@ const handler = nc()
             if (!descricao || descricao.length < 2) {
                 return res.status(400).json({ erro: 'Descricao necessaria' })
             }
-
-            if (!req.file || !req.file.orinalname) {
+            if (!req.file || !req.file.originalname) {
                 return res.status(400).json({ erro: 'Imagem Obrigatória' })
             }
 
