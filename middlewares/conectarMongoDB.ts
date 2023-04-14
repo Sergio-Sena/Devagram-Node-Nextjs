@@ -9,7 +9,7 @@ export const conectarMongoDB = (handler: NextApiHandler) =>
         // ou proximo middleware
         if (mongoose.connections[0].readyState) {
             return handler(req, res);
-        }
+        };
 
         // ja que não está conectado seguir para conexão
         //Obter a variavel preenchida do ENV
