@@ -6,19 +6,19 @@ import { UsuarioModel } from '@/models/UsuarioModel'
 import { PublicacaoModel } from '@/models/PublicacaoModel'
 import publicacao from './publicacao'
 
+
 const feedEndPoint = async (req: NextApiRequest, res: NextApiResponse | any) => {
     try {
         if (req.method === 'GET') {
-            //Preciso receber os dados de feed do usario
-
+            //Preciso receber os dados de feed do usuário
             if (req?.query?.userId) {
-                //agora que tenho o usuario como valido e trago os feed dele.
+                //agora que tenho o usuário como válido, trago os feed dele.
                 const usuario = await UsuarioModel.findById(req?.query?.userId);
                 console.log(req.query, 'feed')
                 if (!usuario) {
                     return res.status(400).json({ erro: 'Usuario inexistente' });
                 }
-                //De onde vem a informaçao?
+                //De onde vem a informação?
                 const publicacao = await PublicacaoModel
                     .find({ idUsuario: usuario._id })
                     .sort({ data: -1 });
@@ -29,8 +29,7 @@ const feedEndPoint = async (req: NextApiRequest, res: NextApiResponse | any) => 
     } catch (e) {
         console.log(e)
     }
-    return res.status(400).json({ erro: 'Nao foi possivel trazer os dados de fedd' });
-
+    return res.status(400).json({ erro: 'Nao foi possivel trazer os dados de feed' });
 }
 
 export default validarTokenJWT(conectarMongoDB(feedEndPoint));

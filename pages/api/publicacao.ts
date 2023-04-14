@@ -7,6 +7,8 @@ import { validarTokenJWT } from '../../middlewares/validarTokenJWT';
 import { PublicacaoModel } from '../../models/PublicacaoModel'
 import { UsuarioModel } from '../../models/UsuarioModel'
 
+
+// Define o handler para a rota
 const handler = nc()
     .use(upload.single('file'))
     .post(async (req: any, res: NextApiResponse<respostaPadraoMsg>) => {
@@ -46,11 +48,12 @@ const handler = nc()
         }
     });
 
-
+// Define as configurações da API
 export const config = {
     api: {
         bodyParser: false
     }
 }
 
-export default validarTokenJWT(conectarMongoDB(handler));   
+// Exporta o handler com os middlewares aplicados
+export default validarTokenJWT(conectarMongoDB(handler)); 
