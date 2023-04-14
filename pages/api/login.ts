@@ -27,7 +27,7 @@ const endPointLogin = async (
         const { login, senha } = req.body;
 
         // Busca no banco de dados por um usuário com as credenciais informadas
-        const usuariosEncontrados = await UsuarioModel.find({ email: login, senha: md5("senha") });
+        const usuariosEncontrados = await UsuarioModel.find({ email: login, senha: md5(senha) });
         // Verifica se o usuário foi encontrado
         if (usuariosEncontrados && usuariosEncontrados.length > 0) {
             // Obtém o primeiro usuário encontrado
