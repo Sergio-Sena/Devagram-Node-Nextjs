@@ -4,7 +4,8 @@ import type { respostaPadraoMsg } from '../../types/respostaPadraoMsg';
 import { loginResposta } from '../../types/LoginResposta';
 import md5 from 'md5';
 import { UsuarioModel } from '@/models/UsuarioModel';
-import jwt from 'jsonwebtoken'; const endPointLogin = async (
+import jwt from 'jsonwebtoken';
+ const endPointLogin = async (
     req: NextApiRequest,
     res: NextApiResponse<respostaPadraoMsg | loginResposta>
 ) => {
@@ -25,6 +26,7 @@ import jwt from 'jsonwebtoken'; const endPointLogin = async (
                 nome: usuarioEncontrado.nome,
                 email: usuarioEncontrado.email,
                 token
+            
             });
         }
 
