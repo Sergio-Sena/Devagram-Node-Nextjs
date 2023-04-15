@@ -56,4 +56,4 @@ export const config = {
 }
 
 // Exporta o handler com os middlewares aplicados
-export default validarTokenJWT(conectarMongoDB(handler)); 
+export default validarTokenJWT(conectarMongoDB(handler));
