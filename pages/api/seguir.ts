@@ -12,6 +12,7 @@ const endpointSeguir = async (req: NextApiRequest, res: NextApiResponse<resposta
             const { userId, id } = req?.query;
             //usuario logado/autenticado
             const usuarioLogado = await UsuarioModel.findById(userId);
+
             if (!usuarioLogado) {
                 return res.status(400).json({ erro: 'Usuario logado nao encontrado' })
             }
