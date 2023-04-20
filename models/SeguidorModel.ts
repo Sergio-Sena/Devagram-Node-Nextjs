@@ -3,7 +3,7 @@ import mongoose, { Schema } from "mongoose";
 const SeguidorSchema = new Schema({
     //Quem segue
     usuarioId: { type: String, require: true },
-    //Quem esta seguido
+    //Quem esta sendo seguido
     usuarioSeguidoId: { type: String, require: true },
 
 });
