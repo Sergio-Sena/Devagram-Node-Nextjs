@@ -4,6 +4,7 @@ import type { respostaPadraoMsg } from '../../types/respostaPadraoMsg';
 import md5 from 'md5';
 import { UsuarioModel } from '@/models/UsuarioModel';
 import jwt from 'jsonwebtoken';
+import { politicaCORS } from '@/middlewares/politicaCORS';
 
 
 // Define o endpoint de login
@@ -57,4 +58,4 @@ const endPointLogin = async (
 }
 
 // Exporta o endpoint de login com o middleware de conexão ao MongoDB
-export default conectarMongoDB(endPointLogin);
+export default politicaCORS( conectarMongoDB(endPointLogin));

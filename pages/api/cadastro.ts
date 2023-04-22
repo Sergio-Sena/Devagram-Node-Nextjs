@@ -6,6 +6,7 @@ import { conectarMongoDB } from '@/middlewares/conectarMongoDB';
 import md5 from 'md5';
 import { upload, uploadImagemCosmic } from '../../services/uploadImagensCosmic';
 import nc from 'next-connect';
+import { politicaCORS } from '@/middlewares/politicaCORS';
 
 // Cria um objeto "handler" que é responsável por processar as requisições para a rota atual.
 // Ele utiliza o pacote "next-connect" para criar uma cadeia de middlewares.
@@ -67,4 +68,4 @@ export const config = {
 }
 
 // Exporta o middleware "conectarMongoDB" juntamente com o objeto "
-export default conectarMongoDB(handler);
+export default politicaCORS(conectarMongoDB(handler)) ;

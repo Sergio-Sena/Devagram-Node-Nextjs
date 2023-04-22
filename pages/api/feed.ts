@@ -6,6 +6,7 @@ import { UsuarioModel } from '../../models/UsuarioModel'
 import { PublicacaoModel } from '../../models/PublicacaoModel'
 import publicacao from './publicacao';
 import { SeguidorModel } from '@/models/SeguidorModel';
+import { politicaCORS } from '@/middlewares/politicaCORS';
 
 const feedEndPoint = async (req: NextApiRequest, res: NextApiResponse<respostaPadraoMsg> | any) => {
     try {
@@ -70,4 +71,4 @@ const feedEndPoint = async (req: NextApiRequest, res: NextApiResponse<respostaPa
     return res.status(400).json({ erro: 'Não foi possível trazer os dados de feed' });
 };
 
-export default validarTokenJWT(conectarMongoDB(feedEndPoint));
+export default politicaCORS(validarTokenJWT(conectarMongoDB(feedEndPoint)));

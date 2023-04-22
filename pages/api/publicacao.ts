@@ -6,6 +6,7 @@ import { conectarMongoDB } from '../../middlewares/conectarMongoDB';
 import { validarTokenJWT } from '../../middlewares/validarTokenJWT';
 import { PublicacaoModel } from '../../models/PublicacaoModel'
 import { UsuarioModel } from '../../models/UsuarioModel'
+import { politicaCORS } from '@/middlewares/politicaCORS';
 
 
 // Define o handler para a rota
@@ -40,7 +41,7 @@ const handler = nc()
             }
             usuario.publicacoes++;
             await UsuarioModel.findByIdAndUpdate({ _id: usuario._id }, usuario);
-            
+
 
             await PublicacaoModel.create(publicacao)
 
@@ -60,4 +61,4 @@ export const config = {
 }
 
 // Exporta o handler com os middlewares aplicados
-export default validarTokenJWT(conectarMongoDB(handler));
+export default politicaCORS(validarTokenJWT(conectarMongoDB(handler)));

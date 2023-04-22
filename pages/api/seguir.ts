@@ -4,6 +4,7 @@ import { validarTokenJWT } from '@/middlewares/validarTokenJWT';
 import { conectarMongoDB } from '@/middlewares/conectarMongoDB';
 import { UsuarioModel } from '@/models/UsuarioModel';
 import { SeguidorModel } from '@/models/SeguidorModel';
+import { politicaCORS } from '@/middlewares/politicaCORS';
 
 const endpointSeguir =
     async (req: NextApiRequest, res: NextApiResponse<respostaPadraoMsg>) => {
@@ -29,13 +30,13 @@ const endpointSeguir =
                     .find({ usuarioId: usuarioLogado._id, usuarioSeguidoId: usuarioASerSeguido._id });
                 if (euJaSigoEsseUsuario && euJaSigoEsseUsuario.length > 0) {
                     //Sinal que ja sigo
-                    euJaSigoEsseUsuario.forEach(async(e:any)=>await SeguidorModel.findByIdAndDelete({_id: e._id}));
+                    euJaSigoEsseUsuario.forEach(async (e: any) => await SeguidorModel.findByIdAndDelete({ _id: e._id }));
                     usuarioLogado.seguindo--;
-                    await UsuarioModel.findByIdAndUpdate({_id: usuarioLogado._id},usuarioLogado);
+                    await UsuarioModel.findByIdAndUpdate({ _id: usuarioLogado._id }, usuarioLogado);
                     usuarioASerSeguido.seguidores--;
-                    await UsuarioModel.findByIdAndUpdate({_id: usuarioASerSeguido._id},usuarioASerSeguido);
+                    await UsuarioModel.findByIdAndUpdate({ _id: usuarioASerSeguido._id }, usuarioASerSeguido);
 
-                    return res.status(200).json({msg:'Deixou se seguir esse usuario'});
+                    return res.status(200).json({ msg: 'Deixou se seguir esse usuario' });
 
                 } else {
                     //sinal que nao sigo
@@ -62,4 +63,4 @@ const endpointSeguir =
         }
     }
 
-export default validarTokenJWT(conectarMongoDB(endpointSeguir))  
+export default politicaCORS(validarTokenJWT(conectarMongoDB(endpointSeguir)));

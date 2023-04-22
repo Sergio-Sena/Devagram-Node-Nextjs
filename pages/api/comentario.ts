@@ -4,6 +4,7 @@ import { validarTokenJWT } from '@/middlewares/validarTokenJWT'
 import { conectarMongoDB } from '@/middlewares/conectarMongoDB'
 import { UsuarioModel } from '@/models/UsuarioModel'
 import { PublicacaoModel } from '@/models/PublicacaoModel'
+import { politicaCORS } from '@/middlewares/politicaCORS'
 
 const comentarioEndpoint = async (req: NextApiRequest, res: NextApiResponse<respostaPadraoMsg>) => {
     try {
@@ -19,9 +20,9 @@ const comentarioEndpoint = async (req: NextApiRequest, res: NextApiResponse<resp
             if (!publicacao) {
                 return res.status(400).json({ erro: 'Nao foi possivel localizar publicaçao' })
             }
-            
-            if (!req.body || 
-                !req.body.comentario || 
+
+            if (!req.body ||
+                !req.body.comentario ||
                 req.body.comentario.length < 2) {
                 return res.status(400).json({ erro: 'comentario invalido' })
             }
@@ -47,4 +48,4 @@ const comentarioEndpoint = async (req: NextApiRequest, res: NextApiResponse<resp
 }
 
 
-export default validarTokenJWT(conectarMongoDB(comentarioEndpoint))
+export default politicaCORS(validarTokenJWT(conectarMongoDB(comentarioEndpoint)));
