@@ -16,7 +16,7 @@ const handler = nc()
             //Para alterar usuario primeiro preciso pegar ususario
             const { userId } = req?.query;
             const usuario = await UsuarioModel.findById(userId);
-
+            console.log('usuario', usuario);
             //Se nao retronou nada,nao existe
             if (!usuario) {
                 return res.status(400).json({ erro: 'Usuario nao encontrado' })
