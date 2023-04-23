@@ -8,7 +8,7 @@ import { upload, uploadImagemCosmic } from '../../services/uploadImagensCosmic';
 import nc from 'next-connect';
 import { politicaCORS } from '@/middlewares/politicaCORS';
 
-// Cria um objeto "handler" que é responsável por processar as requisições para a rota atual.
+/// Cria um objeto "handler" que é responsável por processar as requisições para a rota atual.
 // Ele utiliza o pacote "next-connect" para criar uma cadeia de middlewares.
 const handler = nc()
     // Adiciona um middleware para fazer upload da imagem de avatar.
