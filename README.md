@@ -48,4 +48,10 @@ Este projeto está sob a licença MIT. Veja o arquivo `LICENSE` para mais inform
 
 ## Autor
 
-Este aplicativo foi criado por Sergio-Sena em parceria com Devaria. Se você tiver alguma dúvida ou sugestão, entre em contato comigo em [seu e-mail aqui].
+Este aplicativo foi criado por Sergio-Sena em parceria com Devaria. Se você tiver alguma dúvida ou sugestão, entre em contato comigo em pelas redes abaixo.
+<div>
+
+   <a href="https://www.linkedin.com/in/sergio-pereira-sena-4a0292196/" target="_blank"><img src="https://img.shields.io/badge/-LinkedIn-%230077B5?style=for-the-badge&logo=linkedin&logoColor=white" target="_blank"></a> 
+  <a href="https://www.instagram.com/sergio.senaoficial/" target="_blank"><img src="https://img.shields.io/badge/-Instagram-%23E4405F?style=for-the-badge&logo=instagram&logoColor=white" target="_blank "></a>
+  </div> 
+
