@@ -106,7 +106,7 @@ Este projeto está sob a licença MIT. Veja o arquivo `LICENSE` para mais inform
 
 ## Autor
 
-Este aplicativo foi criado por [seu nome aqui]. Se você tiver alguma dúvida ou sugestão, entre em contato comigo em [seu e-mail aqui].Claro, aqui está um modelo de README para o aplicativo Devagram-Node-NextJS:
+Este aplicativo foi criado por [seu nome aqui]. Se você tiver alguma dúvida ou sugestão, entre em contato comigo em <a href="https://www.linkedin.com/in/sergio-pereira-sena-4a0292196/" target="_blank"><img src="https://img.shields.io/badge/-LinkedIn-%230077B5?style=for-the-badge&logo=linkedin&logoColor=white" target="_blank"></a>.Claro, aqui está um modelo de README para o aplicativo Devagram-Node-NextJS:
 
 # Devagram-Node-NextJS
 
