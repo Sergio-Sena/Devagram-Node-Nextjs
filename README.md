@@ -1,4 +1,3 @@
-Claro, aqui está um modelo de README para o aplicativo Devagram-Node-NextJS:
 
 # Devagram-Node-NextJS
 
@@ -6,18 +5,16 @@ Devagram-Node-NextJS é um aplicativo de rede social para desenvolvedores constr
 
 ## Funcionalidades
 
-- Crie um perfil de desenvolvedor
-- Publique suas habilidades e projetos
-- Pesquise e conecte-se com outros desenvolvedores
-- Envie e receba mensagens de outros desenvolvedores
+- Crie um perfil
+- Publique suas habilidades, projetos, ou comentários
+- Pesquise e conecte-se com outras pessoas
+- Envie e receba mensagens de outras pessoas
 
 ## Tecnologias usadas
 
 - Next.js
 - Node.js
 - MongoDB
-- Tailwind CSS
-- Socket.io
 
 ## Como executar o aplicativo
 
@@ -27,7 +24,7 @@ Devagram-Node-NextJS é um aplicativo de rede social para desenvolvedores constr
 
 ```
 MONGO_URI=coloque-sua-url-do-mongodb-aqui
-JWT_SECRET=coloque-uma-string-aleatória-aqui
+JWT_SECRET=coloque-sua-chave-jwt-aqui
 ```
 
 4. Execute o aplicativo usando o comando `npm run dev`
