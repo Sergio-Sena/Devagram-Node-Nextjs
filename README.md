@@ -1,11 +1,24 @@
+## Olá eu sou o Sergio Sena !(●'◡'●)
 
-# Devagram-Node-NextJS
 ##
+<div>
 <div align="center">
   <a href="https://github.com/sergio-sena/">
   <img height="130em" src="https://github-readme-stats.vercel.app/api?username=sergio-sena&show_icons=true&theme=dracula&include_all_commits=true&count_private=true"/>
   <img height="130em" src="https://github-readme-stats.vercel.app/api/top-langs/?username=sergio-sena&layout=compact&langs_count=7&theme=dracula"/>
 </div>
+Desculpe, houve um erro na minha resposta anterior. Aqui está o código atualizado com a imagem do Node.js adicionada:
+
+<div style="display: inline_block"><br>
+  <img align="center" alt="sergio/Node.js" height="30" width="40" src="https://cdn.jsdelivr.net/gh/devicons/devicon/icons/nodejs/nodejs-original.svg">
+  <img align="center" alt="sergio/-Js" height="30" width="40" src="https://raw.githubusercontent.com/devicons/devicon/master/icons/javascript/javascript-plain.svg">
+  <img align="center" alt="sergio-Python" height="30" width="40" src="https://raw.githubusercontent.com/devicons/devicon/master/icons/python/python-original.svg">
+  <img align="center" alt="sergio-visualstudio" height="30" width="40" src="https://cdn.jsdelivr.net/gh/devicons/devicon/icons/visualstudio/visualstudio-plain.svg">
+  <img align="center" alt="sergio-mysql" height="50" width="60" src= "https://cdn.jsdelivr.net/gh/devicons/devicon/icons/mysql/mysql-original-wordmark.svg">
+  <img align="center" alt="sergio-azure" height="50" width="60" src="https://cdn.jsdelivr.net/gh/devicons/devicon/icons/azure/azure-original-wordmark.svg">
+</div>  </div>
+
+  # Devagram-Node-NextJS
 
 Devagram-Node-NextJS é um aplicativo de rede social para desenvolvedores construído com Next.js e Node.js. Este aplicativo permite que os desenvolvedores criem um perfil, publiquem suas habilidades e projetos, e se conectem com outros desenvolvedores.
 
