@@ -4,9 +4,8 @@ import { conectarMongoDB } from '@/middlewares/conectarMongoDB';
 import { validarTokenJWT } from '@/middlewares/validarTokenJWT';
 import { UsuarioModel } from '@/models/UsuarioModel';
 import { SeguidorModel } from '@/models/SeguidorModel';
-import usuario from './usuario';
-import { politicaCORS } from '@/middlewares/politicaCORS';
-
+import { PublicacaoModel } from '@/models/PublicacaoModel';
+import { corsMiddleware } from '@/middlewares/corsMiddleware';
 
 const pesquisaEndpoint = async (req: NextApiRequest, res: NextApiResponse<respostaPadraoMsg | any[]>) => {
     try {
@@ -15,6 +14,7 @@ const pesquisaEndpoint = async (req: NextApiRequest, res: NextApiResponse<respos
                 const { userId } = req.query;
                 const idPerfilVisitado = req.query.id;
                 
+                // Buscar dados do usuário
                 const usuarioEncontrado = await UsuarioModel.findById(idPerfilVisitado)
                     .select('nome email avatar _id publicacoes seguidores seguindo');
                 
@@ -64,15 +64,12 @@ const pesquisaEndpoint = async (req: NextApiRequest, res: NextApiResponse<respos
                 }));
 
                 return res.status(200).json(usuariosFiltrados);
-
             }
         }
-
     } catch (e) {
         console.log(e)
         return res.status(500).json({ erro: 'Nao foi possivel encontrar usuarios' })
-
     }
 };
 
-export default politicaCORS(validarTokenJWT(conectarMongoDB(pesquisaEndpoint)));
+export default corsMiddleware(validarTokenJWT(conectarMongoDB(pesquisaEndpoint)));
