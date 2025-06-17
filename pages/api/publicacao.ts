@@ -1,12 +1,17 @@
 import type { NextApiRequest, NextApiResponse } from 'next';
 import type { respostaPadraoMsg } from '../../types/respostaPadraoMsg';
 import nc from 'next-connect';
-import { upload, uploadImagemCosmic } from '../../services/uploadImagensS3';
+import multer from 'multer';
+import { uploadImagemS3 } from '../../services/uploadImagensS3';
 import { conectarMongoDB } from '../../middlewares/conectarMongoDB';
 import { validarTokenJWT } from '../../middlewares/validarTokenJWT';
 import { PublicacaoModel } from '../../models/PublicacaoModel';
 import { UsuarioModel } from '../../models/UsuarioModel';
 import { corsMiddleware } from '@/middlewares/corsMiddleware';
+
+// Configuração do multer para upload de arquivos
+const storage = multer.memoryStorage();
+const upload = multer({ storage: storage });
 
 // Handler para requisições POST (com upload de arquivo)
 const handlerPost = nc()
@@ -32,13 +37,21 @@ const handlerPost = nc()
                 return res.status(400).json({ erro: 'A imagem é obrigatória' });
             }
 
-            const image = await uploadImagemCosmic(req);
+            console.log('Arquivo recebido:', req.file.originalname);
+            
+            const image = await uploadImagemS3(req);
+            if (!image || !image.media || !image.media.url) {
+                return res.status(400).json({ erro: 'Erro ao fazer upload da imagem' });
+            }
+            
             const publicacao = {
                 idUsuario: usuario._id,
                 descricao,
-                foto: image.url,
+                foto: image.media.url,
                 data: new Date()
             }
+
+            console.log('Criando publicação:', publicacao);
 
             usuario.publicacoes++;
             await UsuarioModel.findByIdAndUpdate({ _id: usuario._id }, usuario);
@@ -46,8 +59,8 @@ const handlerPost = nc()
             await PublicacaoModel.create(publicacao);
             return res.status(200).json({ msg: 'Publicação criada com sucesso' });
         } catch (e) {
-            console.log(e);
-            return res.status(400).json({ erro: 'Erro ao cadastrar publicação' });
+            console.log('Erro ao cadastrar publicação:', e);
+            return res.status(400).json({ erro: 'Erro ao cadastrar publicação: ' + e });
         }
     });
 
@@ -97,21 +110,29 @@ const handlerDelete = nc()
 
 // Handler principal que direciona para o handler correto com base no método HTTP
 export default async function handler(req: NextApiRequest, res: NextApiResponse<respostaPadraoMsg>) {
-    // Aplicar o middleware CORS primeiro
-    return corsMiddleware(async (req: NextApiRequest, res: NextApiResponse) => {
-        // Depois aplicar os outros middlewares
-        const middlewares = validarTokenJWT(conectarMongoDB);
-        
-        return middlewares(async (req: NextApiRequest, res: NextApiResponse) => {
-            // Direcionar para o handler correto com base no método HTTP
-            if (req.method === 'POST') {
-                return handlerPost(req, res);
-            } else if (req.method === 'DELETE') {
-                return handlerDelete(req, res);
-            } else {
-                return res.status(405).json({ erro: 'Método não permitido' });
-            }
-        })(req, res);
+    // Configurar cabeçalhos CORS manualmente
+    res.setHeader('Access-Control-Allow-Origin', process.env.CORS_ORIGIN || 'http://localhost:3001');
+    res.setHeader('Access-Control-Allow-Methods', 'POST, GET, DELETE, OPTIONS');
+    res.setHeader('Access-Control-Allow-Headers', 'Content-Type, Authorization, X-Requested-With');
+    res.setHeader('Access-Control-Allow-Credentials', 'true');
+    
+    // Responder imediatamente para requisições OPTIONS (preflight)
+    if (req.method === 'OPTIONS') {
+        return res.status(200).end();
+    }
+    
+    // Aplicar os middlewares
+    const middlewares = validarTokenJWT(conectarMongoDB);
+    
+    return middlewares(async (req: NextApiRequest, res: NextApiResponse) => {
+        // Direcionar para o handler correto com base no método HTTP
+        if (req.method === 'POST') {
+            return handlerPost(req, res);
+        } else if (req.method === 'DELETE') {
+            return handlerDelete(req, res);
+        } else {
+            return res.status(405).json({ erro: 'Método não permitido' });
+        }
     })(req, res);
 }
 
