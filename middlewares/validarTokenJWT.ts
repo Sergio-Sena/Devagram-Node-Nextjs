@@ -4,33 +4,59 @@ import jwt, { JwtPayload } from 'jsonwebtoken';
 
 export const validarTokenJWT = (handler: NextApiHandler) =>
     (req: NextApiRequest, res: NextApiResponse<respostaPadraoMsg>) => {
-        const { MINHA_CHAVE_JWT } = process.env;
+        try {
+            const { JWT_SECRET } = process.env;
 
-        if (!MINHA_CHAVE_JWT) {
-            return res.status(500).json({ erro: 'Token não informado na execução do projeto' });
-        }
+            if (!JWT_SECRET) {
+                return res.status(500).json({ erro: 'Chave JWT não configurada no servidor' });
+            }
 
-        if (!req || !req.headers) {
-            return res.status(401).json({ erro: 'Não foi possivel validar o token de acesso' })
-        }
+            // Permitir requisições OPTIONS para CORS
+            if (req.method === 'OPTIONS') {
+                return handler(req, res);
+            }
 
-        if (req.method !== 'OPTIONS') {
-            const authorization = req.headers['authorization']
+            if (!req || !req.headers) {
+                return res.status(401).json({ erro: 'Não foi possível validar o token de acesso' });
+            }
+
+            const authorization = req.headers['authorization'];
             if (!authorization) {
-                return res.status(401).json({ erro: 'Não foi possivel validar o token de acesso.' });
+                return res.status(401).json({ erro: 'Token de autorização não fornecido' });
             }
-            const token = authorization.substring(7);
+
+            const token = authorization.substring(7); // Remove 'Bearer ' do início
             if (!token) {
-                return res.status(401).json({ erro: 'Não foi posssivel validar o token de acesso.' })
+                return res.status(401).json({ erro: 'Token de autorização inválido' });
             }
-            const decoded = jwt.verify(token, MINHA_CHAVE_JWT) as JwtPayload;
-            if (!decoded) {
-                return res.status(401).json({ erro: 'Não foi possivel decodificar token de segurança' });
+            
+            try {
+                // Verifica o token com a chave JWT
+                const decoded = jwt.verify(token, JWT_SECRET) as JwtPayload;
+                
+                if (!req.query) {
+                    req.query = {};
+                }
+                
+                // Extrai o ID do usuário do token e adiciona ao objeto de consulta
+                if (decoded && typeof decoded === 'object') {
+                    if (decoded._id) {
+                        req.query.userId = decoded._id;
+                    } else if (decoded.usuario_id) {
+                        req.query.userId = decoded.usuario_id;
+                    }
+                }
+
+                // Log para debug
+                console.log('Token validado com sucesso. ID do usuário:', req.query.userId);
+                
+                return handler(req, res);
+            } catch (err) {
+                console.log('Erro ao verificar token JWT:', err);
+                return res.status(401).json({ erro: 'Token inválido ou expirado' });
             }
-            if (!req.query) {
-                req.query = {};
-            }
-            req.query.userId = decoded._id;
+        } catch (e) {
+            console.log('Erro ao validar token JWT:', e);
+            return res.status(500).json({ erro: 'Ocorreu erro ao validar o token de acesso' });
         }
-        return handler(req, res);
     }
