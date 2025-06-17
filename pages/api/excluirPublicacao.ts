@@ -4,7 +4,7 @@ import { conectarMongoDB } from '../../middlewares/conectarMongoDB';
 import { validarTokenJWT } from '../../middlewares/validarTokenJWT';
 import { PublicacaoModel } from '../../models/PublicacaoModel';
 import { UsuarioModel } from '../../models/UsuarioModel';
-import { politicaCORS } from '@/middlewares/politicaCORS';
+import { corsMiddleware } from '@/middlewares/corsMiddleware';
 
 const handler = async (req: NextApiRequest, res: NextApiResponse<respostaPadraoMsg>) => {
     try {
@@ -53,4 +53,4 @@ const handler = async (req: NextApiRequest, res: NextApiResponse<respostaPadraoM
     }
 };
 
-export default politicaCORS(validarTokenJWT(conectarMongoDB(handler)));
+export default corsMiddleware(validarTokenJWT(conectarMongoDB(handler)));
